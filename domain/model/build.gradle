@@ -1,0 +1,6 @@
+dependencies {
+    testImplementation 'io.projectreactor:reactor-test'
+
+    implementation 'io.projectreactor:reactor-core'
+    implementation 'io.projectreactor.addons:reactor-extra'
+}
