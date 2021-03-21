@@ -1,5 +1,9 @@
 server:
   port: 8080
+app:
+  context: /socialmedia
+
+
 spring:
   application:
     name: "socialmedia"
@@ -14,6 +18,11 @@ spring:
   data:
     mongodb:
       uri: "mongodb://localhost:27017/test"
-adapter:
-  restconsumer:
-    url: "http://localhost:8080"
+
+remote:
+  service:
+    url: "https://jsonplaceholder.typicode.com"
+    users-uri: "/users"
+    photos-uri: "/photos"
+    albums-uri: "/albums"
+    user-albums-uri: "/users/%s/albums"
