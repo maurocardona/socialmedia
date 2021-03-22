@@ -1,16 +1,21 @@
 package ar.com.wolox.api;
 
 import ar.com.wolox.model.socialmedia.Album;
+import ar.com.wolox.model.socialmedia.Comment;
 import ar.com.wolox.model.socialmedia.Photo;
 import ar.com.wolox.model.socialmedia.User;
 import ar.com.wolox.usecase.albums.GetAlbumsUseCase;
+import ar.com.wolox.usecase.comments.GetCommentsUseCase;
 import ar.com.wolox.usecase.users.GetUsersUseCase;
 import ar.com.wolox.usecase.photos.GetPhotosUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+
+import java.util.Optional;
 
 @RestController
 public class SocialMediaController {
@@ -21,6 +26,8 @@ public class SocialMediaController {
     private GetAlbumsUseCase getAlbumsUseCase;
     @Autowired
     private GetPhotosUseCase getPhotosUseCase;
+    @Autowired
+    private GetCommentsUseCase getCommentsUseCase;
 
     @GetMapping("/users")
     public Flux<User> getUsers(){
@@ -47,5 +54,9 @@ public class SocialMediaController {
         return getPhotosUseCase.searchPhotosByUser(userId);
     }
 
+    @GetMapping("/comments")
+    public Flux<Comment> getComments(@RequestParam Optional<String> name, @RequestParam Optional<String> userId){
+        return getCommentsUseCase.getCommentsByCriteria(name, userId);
+    }
 
 }

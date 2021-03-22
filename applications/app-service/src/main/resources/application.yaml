@@ -25,4 +25,6 @@ remote:
     users-uri: "/users"
     photos-uri: "/photos"
     albums-uri: "/albums"
+    comments-uri: "/comments"
+    posts-uri: "/posts"
     user-albums-uri: "/users/%s/albums"

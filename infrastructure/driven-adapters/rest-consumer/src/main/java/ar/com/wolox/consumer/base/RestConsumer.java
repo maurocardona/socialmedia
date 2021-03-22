@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -39,6 +40,17 @@ public abstract class RestConsumer {
         return webClient.method(HttpMethod.GET)
                 .uri(UriComponentsBuilder.newInstance()
                         .path(uriFormat(uri, pathParams))
+                        .build()
+                        .toUriString())
+                .retrieve()
+                .bodyToFlux(responseClass);
+    }
+
+    public <R> Flux<R> getRequest(String uri, Class<R> responseClass, MultiValueMap<String, String> queryParams, Object... pathParams) {
+        return webClient.method(HttpMethod.GET)
+                .uri(UriComponentsBuilder.newInstance()
+                        .path(uriFormat(uri, pathParams))
+                        .queryParams(queryParams)
                         .build()
                         .toUriString())
                 .retrieve()
