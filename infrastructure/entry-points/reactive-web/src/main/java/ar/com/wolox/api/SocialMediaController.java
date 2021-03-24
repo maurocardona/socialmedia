@@ -1,13 +1,13 @@
 package ar.com.wolox.api;
 
-import ar.com.wolox.model.socialmedia.Album;
-import ar.com.wolox.model.socialmedia.Comment;
-import ar.com.wolox.model.socialmedia.Photo;
-import ar.com.wolox.model.socialmedia.User;
+import ar.com.wolox.model.socialmedia.media.Album;
+import ar.com.wolox.model.socialmedia.media.Comment;
+import ar.com.wolox.model.socialmedia.media.Photo;
+import ar.com.wolox.model.socialmedia.media.User;
 import ar.com.wolox.usecase.albums.GetAlbumsUseCase;
 import ar.com.wolox.usecase.comments.GetCommentsUseCase;
-import ar.com.wolox.usecase.users.GetUsersUseCase;
 import ar.com.wolox.usecase.photos.GetPhotosUseCase;
+import ar.com.wolox.usecase.users.GetUsersUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,14 +20,17 @@ import java.util.Optional;
 @RestController
 public class SocialMediaController {
 
-    @Autowired
     private GetUsersUseCase getUsersUseCase;
-    @Autowired
     private GetAlbumsUseCase getAlbumsUseCase;
-    @Autowired
     private GetPhotosUseCase getPhotosUseCase;
-    @Autowired
     private GetCommentsUseCase getCommentsUseCase;
+    @Autowired
+    public SocialMediaController(GetUsersUseCase getUsersUseCase, GetAlbumsUseCase getAlbumsUseCase, GetPhotosUseCase getPhotosUseCase, GetCommentsUseCase getCommentsUseCase) {
+        this.getUsersUseCase = getUsersUseCase;
+        this.getAlbumsUseCase = getAlbumsUseCase;
+        this.getPhotosUseCase = getPhotosUseCase;
+        this.getCommentsUseCase = getCommentsUseCase;
+    }
 
     @GetMapping("/users")
     public Flux<User> getUsers(){
@@ -57,6 +60,11 @@ public class SocialMediaController {
     @GetMapping("/comments")
     public Flux<Comment> getComments(@RequestParam Optional<String> name, @RequestParam Optional<String> userId){
         return getCommentsUseCase.getCommentsByCriteria(name, userId);
+    }
+
+    @GetMapping("/users/album/{albumId}/grant/{grant}")
+    public Flux<User> getUsersByAlbumAndGrant(@PathVariable(name = "albumId") String albumId, @PathVariable(name = "grant") String grant){
+        return getUsersUseCase.searchUsersByAlbumIdAndGrant(albumId, grant);
     }
 
 }

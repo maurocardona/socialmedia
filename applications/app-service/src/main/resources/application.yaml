@@ -3,6 +3,11 @@ server:
 app:
   context: /socialmedia
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus"
 
 spring:
   application:
@@ -17,7 +22,8 @@ spring:
     include: null
   data:
     mongodb:
-      uri: "mongodb://localhost:27017/test"
+      uri: "mongodb://localhost:C2y6yDjf5%2FR%2Bob0N8A7Cgv30VRDJIWEHLM%2B4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw%2FJw%3D%3D@localhost:10255/admin?ssl=true"
+      database: "socialmedia"
 
 remote:
   service:

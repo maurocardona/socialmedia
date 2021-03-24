@@ -1,8 +1,9 @@
 package ar.com.wolox.consumer;
 
 import ar.com.wolox.consumer.base.RestConsumer;
-import ar.com.wolox.model.socialmedia.*;
 import ar.com.wolox.model.socialmedia.gateways.SocialMediaRepository;
+import ar.com.wolox.model.socialmedia.media.*;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -10,8 +11,10 @@ import org.springframework.util.MultiValueMap;
 import reactor.core.publisher.Flux;
 
 @Service
+@Setter
 public class SocialMediaService extends RestConsumer implements SocialMediaRepository {
 
+    private static final String USER_ID_QUERY_PARAM = "userId";
     @Value("${remote.service.users-uri}")
     private String usersUri;
     @Value("${remote.service.photos-uri}")
@@ -30,7 +33,7 @@ public class SocialMediaService extends RestConsumer implements SocialMediaRepos
     }
 
     @Override
-    public Flux<User> searchAllUserFromRemoteSource() {
+    public Flux<User> searchAllUsers() {
         return getRequest(usersUri, User.class);
     }
 
@@ -66,7 +69,7 @@ public class SocialMediaService extends RestConsumer implements SocialMediaRepos
 
     public static MultiValueMap<String, String> buildRiskSearchQueryParams(String userId){
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("userId", userId);
+        queryParams.add(USER_ID_QUERY_PARAM, userId);
         return queryParams;
     }
 }

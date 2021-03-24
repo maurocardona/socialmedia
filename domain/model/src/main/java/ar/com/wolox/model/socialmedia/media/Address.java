@@ -1,4 +1,4 @@
-package ar.com.wolox.model.socialmedia;
+package ar.com.wolox.model.socialmedia.media;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

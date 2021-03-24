@@ -1,10 +1,10 @@
 package ar.com.wolox.model.socialmedia.gateways;
 
-import ar.com.wolox.model.socialmedia.*;
+import ar.com.wolox.model.socialmedia.media.*;
 import reactor.core.publisher.Flux;
 
 public interface SocialMediaRepository {
-    Flux<User> searchAllUserFromRemoteSource();
+    Flux<User> searchAllUsers();
     Flux<Album> searchAllAlbumsFromRemoteSource();
     Flux<Album> searchAUserAlbums(String userId);
     Flux<Photo> searchAllPhotos();

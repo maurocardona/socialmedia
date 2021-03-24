@@ -1,7 +1,7 @@
 package ar.com.wolox.usecase.comments;
 
-import ar.com.wolox.model.socialmedia.Comment;
 import ar.com.wolox.model.socialmedia.gateways.SocialMediaRepository;
+import ar.com.wolox.model.socialmedia.media.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

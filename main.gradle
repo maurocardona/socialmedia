@@ -15,7 +15,10 @@ subprojects {
 
     dependencies {
 
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        runtimeOnly("org.springframework.boot:spring-boot-devtools")
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+        testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb-reactive'
         testImplementation 'io.projectreactor:reactor-test'
 
         implementation 'io.projectreactor:reactor-core'
@@ -28,6 +31,9 @@ subprojects {
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
         compile('org.springframework.boot:spring-boot-starter-webflux')
 
+
+        implementation("org.springframework.boot:spring-boot-starter-actuator")
+        implementation group: 'io.micrometer', name: 'micrometer-registry-prometheus', version: '1.6.5'
     }
 
     test.finalizedBy(project.tasks.jacocoTestReport)

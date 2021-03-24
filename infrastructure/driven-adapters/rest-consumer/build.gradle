@@ -2,4 +2,6 @@ dependencies {
     implementation project(':model')
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    testImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+
 }
