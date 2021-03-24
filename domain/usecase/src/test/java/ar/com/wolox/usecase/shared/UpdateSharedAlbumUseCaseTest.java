@@ -62,16 +62,11 @@ public class UpdateSharedAlbumUseCaseTest {
 
     @Test
     public void updateAlbumUserGrant_changeGrantToUser_returnError(){
-        when(sharedAlbumRepository.findByAlbumId(anyString())).thenReturn(Flux.just(SharedAlbum.builder().albumId("1").guest(Guest.builder().userId("2").grant("read").build()).build()));
-        when(sharedAlbumRepository.save(any(SharedAlbum.class))).thenReturn(Mono.just(SharedAlbum.builder().id(UUID.randomUUID().toString()).build()));
-
 
         Mono<Void> result = updateSharedAlbumUseCase.updateAlbumUserGrant("", "2", "write");
 
         StepVerifier.create(result)
                 .expectError(BusinessException.class)
                 .verify();
-
-
     }
 }

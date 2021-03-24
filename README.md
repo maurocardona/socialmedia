@@ -1,10 +1,12 @@
-# Proyecto Base Implementando Clean Architecture
+# Wolox - Gestion de usuarios y recursos
 
-## Antes de Iniciar
+## Contexto
 
-Empezaremos por explicar los diferentes componentes del proyectos y partiremos de los componentes externos, continuando con los componentes core de negocio (dominio) y por último el inicio y configuración de la aplicación.
+Esta implementaciÃ³n esta basada en el artÃ­culo [Clean Architecture ï¿½ Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a).
 
-Lee el artículo [Clean Architecture — Aislando los detalles](https://medium.com/bancolombia-tech/clean-architecture-aislando-los-detalles-4f9530f35d7a)
+Proyecto generado con la utilidad de SpringBootInitializer y complementado con el plugin que mencionan en el artÃ­culo anterior, que nos entrega como resultado la estructura del proyecto implementando los principios de la Arquitectura Limpia y separado por mÃ³dulos usando Gradle.
+
+A continuaciÃ³n dejo como evidencia parte de la documentaciÃ³n que entrega el plugin, y que considero importante tener en cuenta antes de empezar. 
 
 # Arquitectura
 
@@ -12,11 +14,11 @@ Lee el artículo [Clean Architecture — Aislando los detalles](https://medium.com/
 
 ## Domain
 
-Es el módulo más interno de la arquitectura, pertenece a la capa del dominio y encapsula la lógica y reglas del negocio mediante modelos y entidades del dominio.
+Es el mÃ³dulo mÃ¡s interno de la arquitectura, pertenece a la capa del dominio y encapsula la lÃ³gica y reglas del negocio mediante modelos y entidades del dominio.
 
 ## Usecases
 
-Este módulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define lógica de aplicación y reacciona a las invocaciones desde el módulo de entry points, orquestando los flujos hacia el módulo de entities.
+Este mÃ³dulo gradle perteneciente a la capa del dominio, implementa los casos de uso del sistema, define lÃ³gica de aplicaciÃ³n y reacciona a las invocaciones desde el mÃ³dulo de entry points, orquestando los flujos hacia el mÃ³dulo de entities.
 
 ## Infrastructure
 
@@ -24,9 +26,9 @@ Este módulo gradle perteneciente a la capa del dominio, implementa los casos de 
 
 En el apartado de helpers tendremos utilidades generales para los Driven Adapters y Entry Points.
 
-Estas utilidades no están arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
-genéricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
-basadas en el patrón de diseño [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
+Estas utilidades no estÃ¡n arraigadas a objetos concretos, se realiza el uso de generics para modelar comportamientos
+genÃ©ricos de los diferentes objetos de persistencia que puedan existir, este tipo de implementaciones se realizan
+basadas en el patrÃ³n de diseÃ±o [Unit of Work y Repository](https://medium.com/@krzychukosobudzki/repository-design-pattern-bc490b256006)
 
 Estas clases no puede existir solas y debe heredarse su compartimiento en los **Driven Adapters**
 
@@ -38,4 +40,44 @@ interactuar.
 
 ### Entry Points
 
-Los entry points representan los puntos de entrada de la aplicación o el inicio de los flujos de negocio.
+Los entry points representan los puntos de entrada de la aplicaciÃ³n o el inicio de los flujos de negocio.
+
+# Consideraciones tÃ©cnicas
+
+## Arquitectura Limpia (Clean Architecture)
+Se usan los principios de la Arquitectura Limpia para hacer la aplicaciÃ³n sostenible y escalable en el tiempo, brindando estructura y orden al desarrollo del proyecto.
+
+## Principios SOLID
+Se intenta seguir estos principios para asegurar la calidad del cÃ³digo escrito, estable, limpio y escalable. 
+
+## WebFlux
+Se implementa la librerÃ­a de WebFlux dadas sus capacidades de majenar las peticiones (back-pressure, non-blocking) y las ventajas que tiene frente a el Rest Template tradicional.
+
+## MongoDB
+Se implementa MongoDB por su facilidad de implementar y su flexibilidad para almancer los datos. AdemÃ¡s de sus otras cualidades.
+
+## Prometheus
+Monitoreo de la aplicaciÃ³n con Prometheus (tarea sin finalizar), que considero es una de las partes mas importantes a la hora de lanzar una aplicaciÃ³n a un ambiente de trabajo. AsÃ­ poder tomar medidas correctivas a tiempo.
+
+## ContenerizaciÃ³n
+Me queda pendiente la generaciÃ³n de la imagen con Docker
+
+## Logger
+Me queda pendiente la integraciÃ³n con un framework de loggin, Splunk tal vez.
+
+
+# Sobre la API
+La aplicaciÃ³n brinda los siguientes servicios:
+
+- GET /socialmedia/users -> consulta todos los usuarios del servicio externo.
+- GET /socialmedia/photos -> consulta todas las fotos del servicio externo.
+- GET /socialmedia/albums -> consulta todos los albumes del servicio externo.
+- GET /socialmedia/comments -> consulta todos los comentarios del servicio externo.
+- GET /socialmedia/user/{userId}/albums -> consulta todos los albumes de un usuario.
+- GET /socialmedia/user/{userId}/photos -> consulta todas los fotos de un usuario.
+- GET /socialmedia/shared-album/owner-id/{userId} -> consulta todos los albumes compartidos de un usuario
+- POST /socialmedia/shared-album -> crea un nuevo album compartido
+- PUT /socialmedia/shared-album/update-grant/album-id/{albumId}/user-id/{userId}/grant/{grant} -> modifica los permisos de un usuario sobre determinado album.
+- GET /socialmedia/users/album/{albumId}/grant/{grant} -> consulta todos los usuarios que tienen determinado permiso sobre un album compartido
+
+Se deja un proyecto de Insomnia Rest Client con ejemplos de consumo a los diferentes servicios en el directorio /sources del proyecto. 
