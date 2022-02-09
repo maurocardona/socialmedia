@@ -1,4 +1,4 @@
-# Wolox - Gestion de usuarios y recursos
+# Gestion de usuarios y recursos
 
 ## Contexto
 
